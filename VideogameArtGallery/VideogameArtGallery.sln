@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideogameArtGallery", "VideogameArtGallery.csproj", "{2CF83461-1953-47C2-ABB8-0D6B8A5593B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\DAL\DAL.csproj", "{A91B22DC-137F-4F22-B42C-F239FDC2BE21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Domain\Domain.csproj", "{00B131EB-F604-4824-A844-5C469D82098D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CF83461-1953-47C2-ABB8-0D6B8A5593B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF83461-1953-47C2-ABB8-0D6B8A5593B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF83461-1953-47C2-ABB8-0D6B8A5593B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF83461-1953-47C2-ABB8-0D6B8A5593B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A91B22DC-137F-4F22-B42C-F239FDC2BE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A91B22DC-137F-4F22-B42C-F239FDC2BE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A91B22DC-137F-4F22-B42C-F239FDC2BE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A91B22DC-137F-4F22-B42C-F239FDC2BE21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00B131EB-F604-4824-A844-5C469D82098D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00B131EB-F604-4824-A844-5C469D82098D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00B131EB-F604-4824-A844-5C469D82098D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00B131EB-F604-4824-A844-5C469D82098D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91041AF7-3B5E-4636-87B5-F6B411026556}
+	EndGlobalSection
+EndGlobal
