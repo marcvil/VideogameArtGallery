@@ -15,14 +15,16 @@ namespace Domain.Models
         [MaxLength(500)]
         public string ImgDescription { get; set; }
 
+
         [Required]
-        [ForeignKey("GameId")]
-        public string GameId { get; set; }
+        public int GameId { get; set; }
+        public Game Game { get; set; }
 
 
         [Required]
-        [ForeignKey("PlatformId")]
-        public string PlatformId { get; set; }
+        public int PlatformId { get; set; }
+        public Platform Platform { get; set; }
+
 
     }
 }

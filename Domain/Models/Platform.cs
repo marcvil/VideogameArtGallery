@@ -11,6 +11,16 @@ namespace Domain.Models
 
         [Required]
         [MaxLength(40)]
-        public string SystemName { get; set; }
+        public string PlatformName { get; set; }
+
+
+        // Many-to-Many with GamesPlatform
+        public ICollection<GamesPlatforms> GamesPlatforms { get; set; }
+
+
+
+        // One-to-Many with Image
+
+        public ICollection<Image> Images { get; set; }
     }
 }

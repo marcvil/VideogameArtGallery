@@ -39,6 +39,9 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -47,12 +50,41 @@ namespace DAL.Migrations
 
                     b.HasKey("GameId");
 
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Domain.Models.GamesPlatforms", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("GameId", "PlatformId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("GamesPlatforms");
                 });
 
             modelBuilder.Entity("Domain.Models.Genre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GenreId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -62,9 +94,6 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("GameId")
-                        .HasColumnType("int");
 
                     b.Property<string>("GenreName")
                         .IsRequired()
@@ -77,9 +106,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
+                    b.HasKey("GenreId");
 
                     b.ToTable("Genres");
                 });
@@ -97,9 +124,8 @@ namespace DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GameId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImgDescription")
                         .HasColumnType("nvarchar(500)")
@@ -110,9 +136,8 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
-                    b.Property<string>("PlatformId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -121,6 +146,10 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ImageId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlatformId");
 
                     b.ToTable("Images");
                 });
@@ -138,10 +167,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SystemName")
+                    b.Property<string>("PlatformName")
                         .IsRequired()
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
@@ -154,23 +180,46 @@ namespace DAL.Migrations
 
                     b.HasKey("PlatformId");
 
-                    b.HasIndex("GameId");
-
                     b.ToTable("Platforms");
                 });
 
-            modelBuilder.Entity("Domain.Models.Genre", b =>
+            modelBuilder.Entity("Domain.Models.Game", b =>
                 {
-                    b.HasOne("Domain.Models.Game", null)
-                        .WithMany("GameGenres")
-                        .HasForeignKey("GameId");
+                    b.HasOne("Domain.Models.Genre", "Genre")
+                        .WithMany("Games")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Models.Platform", b =>
+            modelBuilder.Entity("Domain.Models.GamesPlatforms", b =>
                 {
-                    b.HasOne("Domain.Models.Game", null)
-                        .WithMany("GamePlatforms")
-                        .HasForeignKey("GameId");
+                    b.HasOne("Domain.Models.Game", "Game")
+                        .WithMany("GamesPlatforms")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Platform", "Platform")
+                        .WithMany("GamesPlatforms")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Models.Image", b =>
+                {
+                    b.HasOne("Domain.Models.Game", "Game")
+                        .WithMany("Images")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Platform", "Platform")
+                        .WithMany("Images")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

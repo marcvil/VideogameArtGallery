@@ -7,6 +7,6 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IGamesRepository : IRepository<Game>
     {
-
+        IEnumerable<Game> GetByGenre(int genreId);
     }
 }

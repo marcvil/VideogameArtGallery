@@ -10,17 +10,24 @@ namespace DAL.Repositories
 {
     public class ImagesRepository : Repository<Image>, IImagesRepository
     {
-        private ApplicationDbContext applicationDbContext => (ApplicationDbContext)_context;
+        private ApplicationDbContext ApplicationDbContext => (ApplicationDbContext)_context;
         public ImagesRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
 
         }
 
-        public IEnumerable<Image> GetAllImagesData()
+        public override IEnumerable<Image> GetAll()
         {
-            return applicationDbContext.Images
+            return ApplicationDbContext.Images
                  .ToList();
         }
-       
+
+        public override Image Get(int id)
+        {
+            return ApplicationDbContext.Images
+                .Find(id);
+
+        }
+
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using DAL.Repositories;
+using Domain.Models;
+using Domain.RepositoryInterfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +33,11 @@ namespace VideogameArtGallery
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("DAL")));
 
+            services.AddScoped<IGenresRepository, GenresRepository>();
+            services.AddScoped<IGamesRepository, GamesRepository>();
+            services.AddScoped<IImagesRepository, ImagesRepository>();
+            services.AddScoped<IPlatformsRepository, PlatformsRepository>();
+            services.AddScoped<IGamesPlatformsRepository, GamesPlatformsRepository>();
 
             services.AddControllers();
         }
@@ -40,8 +48,8 @@ namespace VideogameArtGallery
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
 
+            }
             app.UseHttpsRedirection();
 
             app.UseRouting();

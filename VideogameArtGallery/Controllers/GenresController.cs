@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain.Models;
 using DAL.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace VideogameArtGallery.Controllers
 {
@@ -15,34 +16,42 @@ namespace VideogameArtGallery.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IGenresRepository repository;
 
-        public GenresController(ApplicationDbContext context)
+        public GenresController(IGenresRepository repo)
         {
-            _context = context;
+            repository = repo;
         }
 
-        // GET: api/Genres
+
+        // GET: api/GenresAll
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Genre>>> GetGenres()
+        public  ActionResult<IEnumerable<Genre>> GetAll()
         {
-          
-            return await _context.Genres.ToListAsync() ;
+
+            return Ok(repository.GetAll());
         }
+        
+       
 
         // GET: api/Genres/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Genre>> GetGenre(int id)
+        public ActionResult<Genre> Get(int id)
         {
-            var genre = await _context.Genres.FindAsync(id);
+            var genre = repository.Get(id);
 
-            if (genre == null)
+            if(genre != null)
+            {
+                return Ok(genre);
+            }
+            else
             {
                 return NotFound();
             }
-
-            return genre;
+          
         }
+
+        /*
 
         // PUT: api/Genres/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -108,5 +117,7 @@ namespace VideogameArtGallery.Controllers
         {
             return _context.Genres.Any(e => e.Id == id);
         }
+    }
+    */
     }
 }

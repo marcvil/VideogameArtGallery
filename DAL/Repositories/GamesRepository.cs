@@ -1,45 +1,44 @@
 ﻿using Domain.Models;
 using Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DAL.Repositories
 {
     public class GamesRepository : Repository<Game>, IGamesRepository
     {
-        private ApplicationDbContext applicationDbContext => (ApplicationDbContext)_context;
+        private ApplicationDbContext ApplicationDbContext => (ApplicationDbContext)_context;
         public GamesRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
 
         }
 
-        public IEnumerable<Game> GetAllGamesData()
+        public override IEnumerable<Game> GetAll()
         {
-            return applicationDbContext.Games
+            return ApplicationDbContext.Games
                  .ToList();
         }
-        /*
-       public IEnumerable<Game> GetGamesByGenre(string genre)
-       {
-          /* return applicationDbContext.Games
-               .Where(g => g.GameGenres)
-
-               .Include(gen =>gen.GameGenres).ThenInclude(g => g.GenreName)
-               .Where(g => g.GameGenres.Gen)
-
-                .ToList();
-                
-          }
-    */
-        public IEnumerable<Game> GetGamesByName(string gameName)
+ 
+        public override Game Get(int id)
         {
-            return applicationDbContext.Games
-                .Where(x=>x.GameName.Contains(gameName))
-                 .ToList();
+            return ApplicationDbContext.Games
+                .Find(id);
+                 
         }
+        public IEnumerable<Game> GetByGenre(int genreId)
+        {
+            return ApplicationDbContext.Games
+                .Where(x => x.GenreId == genreId).ToList();
+
+        }
+
+       
+
+
+
+
 
     }
 }

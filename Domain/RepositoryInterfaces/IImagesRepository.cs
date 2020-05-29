@@ -7,5 +7,6 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IImagesRepository : IRepository<Image>
     {
+
     }
 }

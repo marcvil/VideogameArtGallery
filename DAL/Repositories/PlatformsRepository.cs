@@ -10,7 +10,7 @@ namespace DAL.Repositories
 {
     public class PlatformsRepository : Repository<Platform>, IPlatformsRepository
     {
-        private ApplicationDbContext applicationDbContext => (ApplicationDbContext)_context;
+        private ApplicationDbContext ApplicationDbContext => (ApplicationDbContext)_context;
         public PlatformsRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
 
@@ -19,7 +19,7 @@ namespace DAL.Repositories
 
         public IEnumerable<Platform> GetAllPlatformsData()
         {
-            return applicationDbContext.Platforms
+            return ApplicationDbContext.Platforms
                  .ToList();
         }
        

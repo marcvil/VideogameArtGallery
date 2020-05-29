@@ -16,6 +16,7 @@ namespace DAL
         public DbSet<Game> Games { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Platform> Platforms { get; set; }
+        public DbSet<GamesPlatforms> GamesPlatforms { get; set; }
 
 
 
@@ -28,6 +29,10 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<GamesPlatforms>().HasKey(cs => new { cs.GameId,cs.PlatformId});
+
+            
 
 
         }
