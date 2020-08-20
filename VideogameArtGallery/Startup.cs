@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace VideogameArtGallery
 {
@@ -40,6 +41,17 @@ namespace VideogameArtGallery
             services.AddScoped<IGamesPlatformsRepository, GamesPlatformsRepository>();
 
             services.AddControllers();
+
+            services.AddCors();
+
+            services.AddControllers()
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                   options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+               });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +63,12 @@ namespace VideogameArtGallery
 
             }
             app.UseHttpsRedirection();
+
+            app.UseCors(builder => builder
+             .AllowAnyOrigin()
+             .AllowAnyMethod()
+             .AllowAnyHeader());
+          
 
             app.UseRouting();
 
