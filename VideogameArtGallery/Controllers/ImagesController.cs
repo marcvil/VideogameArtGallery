@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain.Models;
+using Domain.RepositoryInterfaces;
+using System.IO;
 
 namespace VideogameArtGallery.Controllers
 {
@@ -16,10 +18,14 @@ namespace VideogameArtGallery.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ImagesController(ApplicationDbContext context)
+
+        private readonly IImagesRepository repository;
+
+        public ImagesController(IImagesRepository repo)
         {
-            _context = context;
+            repository = repo;
         }
+
 
         // GET: api/Images
         [HttpGet]
@@ -30,16 +36,19 @@ namespace VideogameArtGallery.Controllers
 
         // GET: api/Images/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Image>> GetImage(int id)
+        public   IActionResult GetImage(int id)
         {
-            var image = await _context.Images.FindAsync(id);
+            Image image =  repository.Get(id);
 
             if (image == null)
             {
                 return NotFound();
             }
 
-            return image;
+            Byte[] b = System.IO.File.ReadAllBytes(image.ImgUrl);   // You can use your own method over here.         
+            return  File(b, "image/jpeg");
+
+           
         }
 
         // PUT: api/Images/5
