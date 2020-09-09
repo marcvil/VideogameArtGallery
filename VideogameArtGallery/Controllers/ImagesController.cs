@@ -9,6 +9,7 @@ using DAL;
 using Domain.Models;
 using Domain.RepositoryInterfaces;
 using System.IO;
+using System.Text;
 
 namespace VideogameArtGallery.Controllers
 {
@@ -26,17 +27,41 @@ namespace VideogameArtGallery.Controllers
             repository = repo;
         }
 
-
+        
         // GET: api/Images
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Image>>> GetImages()
+        public  ActionResult<List<FileContentResult>> GetImages()
         {
-            return await _context.Images.ToListAsync();
+            IEnumerable<Image> listImages = repository.GetAll();
+
+            List<FileContentResult> listImagesToPass = new List<FileContentResult>();
+
+            if (listImages == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                foreach (Image i in listImages)
+                {
+                    Byte[] b = System.IO.File.ReadAllBytes(i.ImgUrl);   // You can use your own method over here.         
+
+                    listImagesToPass.Add(File(b, "image/jpeg"));
+                    
+
+                }
+
+                return listImagesToPass;
+
+            }
+
+            
         }
 
         // GET: api/Images/5
+        
         [HttpGet("{id}")]
-        public   IActionResult GetImage(int id)
+        public ActionResult<ImageDTO> GetImage(int id)
         {
             Image image =  repository.Get(id);
 
@@ -45,8 +70,24 @@ namespace VideogameArtGallery.Controllers
                 return NotFound();
             }
 
-            Byte[] b = System.IO.File.ReadAllBytes(image.ImgUrl);   // You can use your own method over here.         
-            return  File(b, "image/jpeg");
+            Byte[] b = System.IO.File.ReadAllBytes(image.ImgUrl);   // You can use your own method over here.  
+            string base64ImageRepresentation ="data:image/jpeg;base64," + Convert.ToBase64String(b);
+            //var file = File(b, "image/jpeg;base64", image.ImgName);
+            
+               ImageDTO img = new ImageDTO
+            {
+                imageId = image.ImageId,
+                imgName = image.ImgName,
+                imgDescription = image.ImgDescription,
+                imgUrl = base64ImageRepresentation
+               };
+
+            return img;
+          
+            
+            //return File(b, "image/jpeg;base64", image.ImgName);
+   
+            
 
            
         }

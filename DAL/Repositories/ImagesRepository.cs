@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
@@ -22,9 +23,9 @@ namespace DAL.Repositories
                  .ToList();
         }
 
-        public override Image Get(int id)
+        public override  Image Get(int id)
         {
-            return ApplicationDbContext.Images
+            return  ApplicationDbContext.Images
                 .Find(id);
 
         }
