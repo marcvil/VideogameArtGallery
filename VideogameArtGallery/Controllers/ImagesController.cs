@@ -30,12 +30,12 @@ namespace VideogameArtGallery.Controllers
         
         // GET: api/Images
         [HttpGet]
-        public  ActionResult<List<FileContentResult>> GetImages()
+        public  ActionResult<List<ImageDTO>> GetImages()
         {
             IEnumerable<Image> listImages = repository.GetAll();
 
-            List<FileContentResult> listImagesToPass = new List<FileContentResult>();
-
+            List<ImageDTO> list = new List<ImageDTO>();
+            
             if (listImages == null)
             {
                 return NotFound();
@@ -44,14 +44,20 @@ namespace VideogameArtGallery.Controllers
             {
                 foreach (Image i in listImages)
                 {
-                    Byte[] b = System.IO.File.ReadAllBytes(i.ImgUrl);   // You can use your own method over here.         
-
-                    listImagesToPass.Add(File(b, "image/jpeg"));
-                    
+                    Byte[] b = System.IO.File.ReadAllBytes(i.ImgUrl);   // You can use your own method over here.  
+                    string base64ImageRepresentation = "data:image/png;base64," + Convert.ToBase64String(b);
+                    ImageDTO img = new ImageDTO
+                    {
+                        imageId = i.ImageId,
+                        imgName = i.ImgName,
+                        imgDescription = i.ImgDescription,
+                        imgUrl = base64ImageRepresentation
+                    };
+                    list.Add(img);
 
                 }
 
-                return listImagesToPass;
+                return list;
 
             }
 
