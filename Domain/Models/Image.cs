@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models
 {
     public class Image : Entity
     {
+        
         public int ImageId { get; set; }
         [Required]
         [MaxLength(40)]
@@ -27,6 +24,13 @@ namespace Domain.Models
         [Required]
         public int PlatformId { get; set; }
         public Platform Platform { get; set; }
+
+
+
+        //One to Many Authors
+        [Required]
+        public int AuthorId { get; set; }
+        public Author Author { get; set; }
 
 
     }

@@ -23,14 +23,14 @@ namespace DAL.Repositories
  
         public override Game Get(int id)
         {
-          
 
-            Game result = ApplicationDbContext.Games
+
+            Game result = ApplicationDbContext.Games  //.Find(id);
                 .Include(g => g.Genre)
                 .Include(p => p.GamesPlatforms).ThenInclude(p => p.Platform)
                 .Include(i => i.Images)
                 .First(g => g.GameId == id);
-
+               
             return result;
 
 
@@ -38,8 +38,9 @@ namespace DAL.Repositories
         }
         public IEnumerable<Game> GetByGenre(int genreId)
         {
-            return ApplicationDbContext.Games
-                .Where(x => x.GenreId == genreId).ToList();
+            return null;
+            //return ApplicationDbContext.Games
+                //.Where(x => x.GenreId == genreId).ToList();
 
         }
 

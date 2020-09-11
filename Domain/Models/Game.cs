@@ -16,10 +16,21 @@ namespace Domain.Models
         public string GameDescription { get; set; }
 
 
-        // One-to-Many with Genre
+        //One to One Image Cover
         [Required]
-        public int GenreId { get; set; }
-        public Genre Genre{ get; set; }
+      
+        public int ImageCoverId { get; set; }
+        public ImageCover ImageCover { get; set; }
+
+        //One to One ImageGameLogo
+        [Required]
+        public int ImageGameLogoId { get; set; }
+        public ImageGameLogo ImageGameLogo { get; set; }
+
+
+        // Many-to-Many with Genre
+      
+        public ICollection<GamesGenres> Genre{ get; set; }
 
 
         // Many-to-Many with GamesPlatform

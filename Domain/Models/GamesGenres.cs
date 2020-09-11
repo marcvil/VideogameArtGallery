@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Domain.Models
 {
-    public class GamesPlatforms : Entity
+    public class GamesGenres : Entity
     {
+
 
         //Bridge Relation between Many to Many with Game
         [Required]
@@ -16,9 +16,7 @@ namespace Domain.Models
 
         //Bridge Relation between Many to Many with Platform
         [Required]
-        public int PlatformId { get; set; }
-        public Platform Platform { get; set; }
-
-
+        public int GenreId { get; set; }
+        public Genre Genre { get; set; }
     }
 }

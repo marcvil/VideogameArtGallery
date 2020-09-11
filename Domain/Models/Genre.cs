@@ -9,15 +9,16 @@ namespace Domain.Models
     public class Genre : Entity
     {
         public int GenreId { get; set; }
+
         [Required]
         [MaxLength(40)]
         public string GenreName { get; set; }
 
 
 
-        // One-to-Many with Game
+        // Many-to-Many with Game
 
-        public ICollection<Game> Games { get; set; }
+        public ICollection<GamesGenres> Games { get; set; }
 
     }
 }

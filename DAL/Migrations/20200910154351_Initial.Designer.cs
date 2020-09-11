@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200528112409_Eight")]
-    partial class Eight
+    [Migration("20200910154351_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,12 +21,38 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Models.Game", b =>
+            modelBuilder.Entity("Domain.Models.Author", b =>
                 {
-                    b.Property<int>("GameId")
+                    b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AuthorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+                });
+
+            modelBuilder.Entity("Domain.Models.Game", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -41,7 +67,10 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int>("ImageCoverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ImageGameLogoId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -52,9 +81,34 @@ namespace DAL.Migrations
 
                     b.HasKey("GameId");
 
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Domain.Models.GamesGenres", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("GameId", "GenreId");
+
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Games");
+                    b.ToTable("GamesGenres");
                 });
 
             modelBuilder.Entity("Domain.Models.GamesPlatforms", b =>
@@ -120,6 +174,9 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -138,6 +195,10 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
                     b.Property<int>("PlatformId")
                         .HasColumnType("int");
 
@@ -149,11 +210,93 @@ namespace DAL.Migrations
 
                     b.HasKey("ImageId");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("GameId");
 
                     b.HasIndex("PlatformId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("Domain.Models.ImageCover", b =>
+                {
+                    b.Property<int>("ImageCoverId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImgCoverDescription")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("ImgCoverName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("ImgCoverUrl")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ImageCoverId");
+
+                    b.ToTable("ImageCovers");
+                });
+
+            modelBuilder.Entity("Domain.Models.ImageGameLogo", b =>
+                {
+                    b.Property<int>("ImageGameLogoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImgGameLogoDescription")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("ImgGameLogoName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("ImgGameLogoUrl")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ImageGameLogoId");
+
+                    b.ToTable("ImageGameLogos");
                 });
 
             modelBuilder.Entity("Domain.Models.Platform", b =>
@@ -187,6 +330,27 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Domain.Models.Game", b =>
                 {
+                    b.HasOne("Domain.Models.ImageCover", "ImageCover")
+                        .WithOne("Game")
+                        .HasForeignKey("Domain.Models.Game", "GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.ImageGameLogo", "ImageGameLogo")
+                        .WithOne("Game")
+                        .HasForeignKey("Domain.Models.Game", "GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Models.GamesGenres", b =>
+                {
+                    b.HasOne("Domain.Models.Game", "Game")
+                        .WithMany("Genre")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Genre", "Genre")
                         .WithMany("Games")
                         .HasForeignKey("GenreId")
@@ -211,6 +375,12 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Domain.Models.Image", b =>
                 {
+                    b.HasOne("Domain.Models.Author", "Author")
+                        .WithMany("Image")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Game", "Game")
                         .WithMany("Images")
                         .HasForeignKey("GameId")
