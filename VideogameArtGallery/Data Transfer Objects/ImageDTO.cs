@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,5 +14,6 @@ namespace VideogameArtGallery
         public string imgName;
         public  string imgDescription;
         public string imgUrl;
+        public int platform;
     }
 }

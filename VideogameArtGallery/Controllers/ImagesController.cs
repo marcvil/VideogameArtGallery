@@ -25,6 +25,7 @@ namespace VideogameArtGallery.Controllers
         public ImagesController(IImagesRepository repo)
         {
             repository = repo;
+            
         }
 
         
@@ -32,8 +33,8 @@ namespace VideogameArtGallery.Controllers
         [HttpGet]
         public  ActionResult<List<ImageDTO>> GetImages()
         {
-            IEnumerable<Image> listImages = repository.GetAll();
-
+ 
+             IEnumerable<Image> listImages = repository.GetAll();
             List<ImageDTO> list = new List<ImageDTO>();
             
             if (listImages == null)
@@ -45,19 +46,20 @@ namespace VideogameArtGallery.Controllers
                 foreach (Image i in listImages)
                 {
                     Byte[] b = System.IO.File.ReadAllBytes(i.ImgUrl);   // You can use your own method over here.  
-                    string base64ImageRepresentation = "data:image/png;base64," + Convert.ToBase64String(b);
+                    string base64ImageRepresentation = "data:image/jpeg;base64," + Convert.ToBase64String(b);
                     ImageDTO img = new ImageDTO
                     {
                         imageId = i.ImageId,
                         imgName = i.ImgName,
                         imgDescription = i.ImgDescription,
-                        imgUrl = base64ImageRepresentation
+                        imgUrl = base64ImageRepresentation,
+                        platform = i.PlatformId 
                     };
                     list.Add(img);
 
                 }
 
-                return list;
+                return Ok(list);
 
             }
 
@@ -67,10 +69,10 @@ namespace VideogameArtGallery.Controllers
         // GET: api/Images/5
         
         [HttpGet("{id}")]
-        public ActionResult<ImageDTO> GetImage(int id)
+        public async  Task<ActionResult<ImageDTO>> GetImage(int id)
         {
-            Image image =  repository.Get(id);
-
+            // Image image =  repository.Get(id);
+            Image image = await  repository.GetAsync(id);
             if (image == null)
             {
                 return NotFound();
@@ -85,10 +87,12 @@ namespace VideogameArtGallery.Controllers
                 imageId = image.ImageId,
                 imgName = image.ImgName,
                 imgDescription = image.ImgDescription,
+                platform = image.PlatformId,
                 imgUrl = base64ImageRepresentation
+                   
                };
 
-            return img;
+            return Ok(img);
           
             
             //return File(b, "image/jpeg;base64", image.ImgName);

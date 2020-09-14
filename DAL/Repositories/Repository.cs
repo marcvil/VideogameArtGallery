@@ -31,18 +31,6 @@ namespace DAL.Repositories
         }
 
 
-        public virtual void Update(TEntity entity)
-        {
-            _entities.Update(entity);
-        }
-
-        public virtual void UpdateRange(IEnumerable<TEntity> entities)
-        {
-            _entities.UpdateRange(entities);
-        }
-
-
-
         public virtual void Remove(TEntity entity)
         {
             _entities.Remove(entity);
@@ -54,12 +42,7 @@ namespace DAL.Repositories
         }
 
 
-        public virtual int Count()
-        {
-            return _entities.Count();
-        }
-
-
+      
         public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _entities.Where(predicate);

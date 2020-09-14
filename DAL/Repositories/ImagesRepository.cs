@@ -16,6 +16,18 @@ namespace DAL.Repositories
         {
 
         }
+        public override Image Get(int id)
+        {
+            return ApplicationDbContext.Images
+                .Find(id);
+
+        }
+        public async Task<Image> GetAsync(int id)
+        {
+            return await ApplicationDbContext.Images
+                 .FindAsync(id);
+        }
+
 
         public override IEnumerable<Image> GetAll()
         {
@@ -23,12 +35,14 @@ namespace DAL.Repositories
                  .ToList();
         }
 
-        public override  Image Get(int id)
+      
+
+        public async Task<IEnumerable<Image>> GetByOrderAsync(int pageIndex, int pageSize)
         {
-            return  ApplicationDbContext.Images
-                .Find(id);
-
+            return await ApplicationDbContext.Images
+                  .Skip((pageIndex - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
         }
-
     }
 }
