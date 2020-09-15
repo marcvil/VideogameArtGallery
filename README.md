@@ -3,16 +3,16 @@
  
  Objectives: Create an ASP.NET Core backend infrastructure, following Domain-Driven Design and clean architecthure practices to supply images saved on a server for the image Gallery.
  
- Current status:
- Models created
- Repository Pattern implemented
- Get Images Implemented!
+ Current status:<br/>
+ Models created <br/>
+ Repository Pattern implemented <br/>
+ Get Images Implemented! <br/>
+ <br/>
 
-
-Next Steps:
-Finish CRUD Api operations
-Implement Swagger
-Implement AutoMapper
-Clean Up Data.Annotations an use Fluent API
+Next Steps:<br/>
+Finish CRUD Api operations<br/>
+Implement Swagger<br/>
+Implement AutoMapper<br/>
+Clean Up Data.Annotations an use Fluent API<br/>
 Publish server to Azure
  
