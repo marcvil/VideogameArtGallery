@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
@@ -15,12 +16,8 @@ namespace DAL.Repositories
 
         }
 
-        public override IEnumerable<Game> GetAll()
-        {
-            return ApplicationDbContext.Games
-                 .ToList();
-        }
- 
+        #region GETS
+
         public override Game Get(int id)
         {
 
@@ -33,18 +30,45 @@ namespace DAL.Repositories
                
             return result;
 
-
-
         }
+        public async Task<Game> GetAsync(int id)
+        {
+            return await ApplicationDbContext.Games  //.Find(id);
+                 .Include(g => g.Genre).ThenInclude(gg => gg.Genre)
+                 .Include(i=>i.ImageCover)
+                 .Include(l => l.ImageGameLogo)
+                 .Include(p => p.GamesPlatforms).ThenInclude(p => p.Platform)
+                 .FirstAsync(g => g.GameId == id);
+
+          
+        }
+
+
+        #region GetBY...
         public IEnumerable<Game> GetByGenre(int genreId)
         {
             return null;
             //return ApplicationDbContext.Games
-                //.Where(x => x.GenreId == genreId).ToList();
+            //.Where(x => x.GenreId == genreId).ToList();
 
+        }
+        #endregion
+        
+
+        public override IEnumerable<Game> GetAll()
+        {
+            return ApplicationDbContext.Games
+                 .ToList();
         }
 
        
+
+      
+       
+        #endregion
+        #region Others
+        #endregion
+
 
 
 

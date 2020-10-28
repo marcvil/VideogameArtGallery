@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Domain.Models
 {
-    public  class Game : Entity
+    public class Game : Entity
     {
         public int GameId { get; set; }
 
         [Required]
         public string GameName { get; set; }
-        
+
         public string GameDescription { get; set; }
 
 
         //One to One Image Cover
         [Required]
-      
+
         public int ImageCoverId { get; set; }
         public ImageCover ImageCover { get; set; }
 
@@ -29,8 +26,8 @@ namespace Domain.Models
 
 
         // Many-to-Many with Genre
-      
-        public ICollection<GamesGenres> Genre{ get; set; }
+
+        public ICollection<GamesGenres> Genre { get; set; }
 
 
         // Many-to-Many with GamesPlatform

@@ -11,9 +11,6 @@ namespace Domain.RepositoryInterfaces
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
-        // This method was not in the videos, but I thought it would be useful to add.
-        TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> predicate);
-
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 

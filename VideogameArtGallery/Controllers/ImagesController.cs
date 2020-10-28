@@ -69,7 +69,7 @@ namespace VideogameArtGallery.Controllers
         // GET: api/Images/5
         
         [HttpGet("{id}")]
-        public async  Task<ActionResult<ImageDTO>> GetImage(int id)
+        public async Task<ActionResult<ImageDTO>> GetImage(int id)
         {
             // Image image =  repository.Get(id);
             Image image = await  repository.GetAsync(id);
@@ -77,6 +77,7 @@ namespace VideogameArtGallery.Controllers
             {
                 return NotFound();
             }
+            else { 
 
             Byte[] b = System.IO.File.ReadAllBytes(image.ImgUrl);   // You can use your own method over here.  
             string base64ImageRepresentation ="data:image/jpeg;base64," + Convert.ToBase64String(b);
@@ -93,14 +94,14 @@ namespace VideogameArtGallery.Controllers
                };
 
             return Ok(img);
-          
-            
-            //return File(b, "image/jpeg;base64", image.ImgName);
-   
-            
 
-           
+            }
+
+
+
         }
+
+
 
         // PUT: api/Images/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
